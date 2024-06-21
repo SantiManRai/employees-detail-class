@@ -1,0 +1,5 @@
+Use Case:
+
+1. Create a Service that performs the task of displaying an employee list
+
+2. Inject the service into the class using Dependency Injection

@@ -1,0 +1,285 @@
+1. Open the VS Code PowerShell terminal:
+
+Ctrl + `
+
+1. Create a component for employees information from VS Code terminal inside the src/app:
+
+ng g c employees-info
+
+2. Create a service for employees record from VS Code terminal inside the src:
+
+ng g service employees-record
+
+3. Create an array to initialization of  the employees information in employees-info.component.ts:
+
+import { Component, OnInit } from '@angular/core';
+
+@Component({
+  selector: 'app-employees-info',
+  standalone: true,
+  imports: [],
+  templateUrl: './employees-info.component.html',
+  styleUrl: './employees-info.component.css'
+})
+export class EmployeesInfoComponent {
+
+  infoReceived1: string[] = [];
+  infoReceived2: string[] = [];
+  infoReceived3: string[] = [];
+  
+  constructor(){}
+  ngOnInit(): void
+  {
+
+  }
+
+}
+
+4. Create three methods to get the employees information and store in  employees-info.component.ts:
+
+import { Component, OnInit } from '@angular/core';
+
+@Component({
+  selector: 'app-employees-info',
+  standalone: true,
+  imports: [],
+  templateUrl: './employees-info.component.html',
+  styleUrl: './employees-info.component.css'
+})
+export class EmployeesInfoComponent {
+
+  infoReceived1: string[] = [];
+  infoReceived2: string[] = [];
+  infoReceived3: string[] = [];
+
+  getInfoFromService1(){}
+  getInfoFromService2(){}
+  getInfoFromService3(){}
+
+
+  constructor(){}
+  ngOnInit(): void
+  {
+
+  }
+
+}
+
+5. Create the three different received of data in employees-data.service.ts:
+
+import { Injectable } from '@angular/core';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class EmployeesDataService {
+
+  info1: string[] = ["John Mathew", 'E3575', 'jm@AbortController.net' ];
+  info2: string[] = ["Rob Wilson", 'E3350', 'rw@AbortController.net' ];
+  info3: string[] = ["Rose Adams", 'E3489', 'ra@AbortController.net' ];
+
+  constructor() { }
+}
+
+6. Create three different methods to return the employees data from employees-data.service.ts:
+
+import { Injectable } from '@angular/core';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class EmployeesDataService {
+
+  info1: string[] = ["John Mathew", 'E3575', 'jm@AbortController.net' ];
+  info2: string[] = ["Rob Wilson", 'E3350', 'rw@AbortController.net' ];
+  info3: string[] = ["Rose Adams", 'E3489', 'ra@AbortController.net' ];
+
+  getInfo1(): string[]
+  {
+    return this.info1;
+  }
+
+  getInfo2(): string[]
+  {
+    return this.info2;
+  }
+
+  getInfo3(): string[]
+  {
+    return this.info3;
+  }
+  constructor() { }
+}
+
+7. Import service data to component using dependent injective from employees-data.service.ts to employees-info.component.ts and also includes in providers array:
+
+import { EmployeesDataService } from '../employees-data.service';
+
+@Component({
+  selector: 'app-employees-info',
+  standalone: true,
+  imports: [],
+  templateUrl: './employees-info.component.html',
+  styleUrl: './employees-info.component.css',
+  providers: [EmployeesDataService],
+})
+
+8. Create a properties to excess all the methods of service employees data information in employees-info.component.ts:
+
+ constructor(private dservice: EmployeesDataService){}
+
+7. Write call back methods to get employees data from service to component in employees-info.component.ts:
+
+import { Component, OnInit } from '@angular/core';
+import { EmployeesDataService } from '../employees-data.service';
+
+@Component({
+  selector: 'app-employees-info',
+  standalone: true,
+  imports: [],
+  templateUrl: './employees-info.component.html',
+  styleUrl: './employees-info.component.css',
+  providers: [EmployeesDataService],
+})
+export class EmployeesInfoComponent {
+
+  infoReceived1: string[] = [];
+  infoReceived2: string[] = [];
+  infoReceived3: string[] = [];
+
+  getInfoFromService1()
+  {
+    this.infoReceived1 = this.dservice.getInfo1();
+  }
+
+  getInfoFromService2()
+  {
+    this.infoReceived2 = this.dservice.getInfo2();
+  }
+  getInfoFromService3()
+  {
+    this.infoReceived3 = this.dservice.getInfo3();
+  }
+
+
+  constructor(private dservice: EmployeesDataService){}
+
+
+  ngOnInit(): void
+  {
+
+  }
+
+}
+
+8. Write a program in employees-info.component.html to display in web page:
+
+
+<button type="button" name="button" (click)='getInfoFromService1()'>Employee1</button>
+<ul class="list-group">
+    <li *ngFor = "let info of infoReceived1" class="list-group-info" >{{info}}</li>
+</ul>
+
+<button type="button" name="button" (click)='getInfoFromService2()'>Employee2</button>
+<ul class="list-group">
+    <li *ngFor = "let info of infoReceived2" class="list-group-info" >{{info}}</li>
+</ul>
+
+<button type="button" name="button" (click)='getInfoFromService3()'>Employee3</button>
+<ul class="list-group">
+    <li *ngFor = "let info of infoReceived3" class="list-group-info" >{{info}}</li>
+</ul>
+
+9. Include the selector of employees-info.component.ts to the main i.e.: app.component.html:
+
+<h1>Angular Services</h1>
+<app-employees-info></app-employees-info>
+
+<router-outlet />
+
+10. Create a method to update the employees information in employees-info.component.ts:
+
+import { Component, OnInit } from '@angular/core';
+import { EmployeesRecordService } from '../employees-record.service';
+
+@Component({
+  selector: 'app-employees-info',
+  templateUrl: './employees-info.component.html',
+  styleUrl: './employees-info.component.css',
+  providers: [EmployeesRecordService],
+})
+export class EmployeesInfoComponent 
+{
+  infoReceived1: string[] = [];
+  infoReceived2: string[] = [];
+  infoReceived3: string[] = [];
+
+ 
+
+  getInfoFromService1()
+  {
+    this.infoReceived1 = this.reservice.getInfo1();
+  }
+
+  getInfoFromService2()
+  {
+    this.infoReceived2 = this.reservice.getInfo2();
+  }
+  getInfoFromService3()
+  {
+    this.infoReceived3 = this.reservice.getInfo3();
+  }
+  constructor(private reservice: EmployeesRecordService)
+  {}
+  
+  ngOnInit(): void{
+
+  }
+
+  updateInfo(frm: any)
+  {
+    this.reservice.addInfo(frm.value.location)
+  }
+}
+
+11. Define addInfo in service files that is employees-record.service.ts:
+
+import { Injectable } from '@angular/core';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class EmployeesRecordService {
+
+  info1: string[] = ["John Mathew", 'E3575', 'jm@AbortController.net' ]
+  info2: string[] = ["Rob Wilson", 'E3350', 'rw@AbortController.net' ]
+  info3: string[] = ["Rose Adams", 'E3489', 'ra@AbortController.net' ]
+  getInfo1(): string[]
+  {
+    return this.info1;
+  }
+
+  getInfo2(): string[]
+  {
+    return this.info2;
+  }
+
+  getInfo3(): string[]
+  {
+    return this.info3;
+  }
+  
+  addInfo (info: string)
+  {
+    this.info1.push(info)
+    this.info2.push(info)
+    this.info3.push(info)
+    return this.info1
+  }
+  constructor() { }
+}
+
+12. Add Submit button as Add Info in employees-info.component.ts:
+
+
+
